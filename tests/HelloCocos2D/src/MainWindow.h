@@ -1,11 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QMainWindow>
-#else
+//#if QT_VERSION >= 0x050000
+//#include <QtWidgets/QMainWindow>
+//#else
 #include <QMainWindow>
-#endif
+//#endif
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +24,14 @@ protected:
 
 public:
     QWidget* getGLViewSuperWidget(void);
+
+//private slots:
+public Q_SLOTS:
+    void on_pushButton_clicked();
+
+private Q_SLOTS:
+
+    void on_actionOpen_triggered();
 
 private:
     Ui::MainWindow *ui;

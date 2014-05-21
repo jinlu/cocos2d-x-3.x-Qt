@@ -1,5 +1,9 @@
 #include "src/MainWindow.h"
 #include "ui_MainWindow.h"
+#include "cocos2d.h"
+#include <QFileDialog>
+
+USING_NS_CC;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,4 +33,16 @@ QWidget*
 MainWindow::getGLViewSuperWidget()
 {
     return ui->widget;
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    CCLOG(" HELLO ");
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Image"), "/Users/fight ", tr("Image Files (*.* *.jpg )"));
+    CCLOG("%s",fileName.toStdString().c_str());
 }

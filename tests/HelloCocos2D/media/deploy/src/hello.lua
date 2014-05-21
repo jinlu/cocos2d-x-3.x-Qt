@@ -213,6 +213,16 @@ local function main()
     local sceneGame = cc.Scene:create()
     sceneGame:addChild(createLayerFarm())
     sceneGame:addChild(createLayerMenu())
+
+    print("Hello world ")
+    --ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("res/BillmanDemo/BillmanDemo.ExportJson")
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("/Users/fight/Workspace/BillmanDemo/BillmanDemo.ExportJson")
+    
+
+    local sprite = ccs.Armature:create("BillmanDemo")
+    sprite:setPosition(cc.p(480,320))
+    sceneGame:addChild(sprite)
+
     cc.Director:getInstance():runWithScene(sceneGame)
 
 end
