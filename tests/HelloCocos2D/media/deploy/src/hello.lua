@@ -223,6 +223,9 @@ local function main()
     sprite:setPosition(cc.p(480,320))
     sceneGame:addChild(sprite)
 
+    local path = dd.LuaBridge:getInstance():getPath()
+    print(path)
+
     cc.Director:getInstance():runWithScene(sceneGame)
 
 end

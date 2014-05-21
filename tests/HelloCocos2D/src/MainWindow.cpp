@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "cocos2d.h"
 #include <QFileDialog>
+#include "luabridge.h"
 
 USING_NS_CC;
 
@@ -45,4 +46,6 @@ void MainWindow::on_actionOpen_triggered()
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Image"), "/Users/fight ", tr("Image Files (*.* *.jpg )"));
     CCLOG("%s",fileName.toStdString().c_str());
+
+    LuaBridge::getInstance()->setPath(fileName.toStdString());
 }

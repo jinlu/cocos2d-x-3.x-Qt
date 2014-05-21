@@ -5,6 +5,7 @@ HEADERS += \
     ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_spine_auto.hpp \
     ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_studio_auto.hpp \
     ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_ui_auto.hpp \
+    ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_bridge_auto.hpp \
     ../../cocos/scripting/lua-bindings/manual/CCBProxy.h \
     ../../cocos/scripting/lua-bindings/manual/CCLuaBridge.h \
     ../../cocos/scripting/lua-bindings/manual/CCLuaEngine.h \
@@ -27,6 +28,7 @@ HEADERS += \
     ../../cocos/scripting/lua-bindings/manual/LuaScriptHandlerMgr.h \
     ../../cocos/scripting/lua-bindings/manual/LuaSkeletonAnimation.h \
     ../../cocos/scripting/lua-bindings/manual/tolua_fix.h \
+    ../../tests/HelloCocos2D/src/luabridge.h \
 
 #    ../../cocos/scripting/lua-bindings/manual/platform/qt/CCLuaObjcBridge.h
 
@@ -37,6 +39,7 @@ SOURCES += \
     ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_spine_auto.cpp \
     ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_studio_auto.cpp \
     ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_ui_auto.cpp \
+    ../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_bridge_auto.cpp \
     ../../cocos/scripting/lua-bindings/manual/CCBProxy.cpp \
     ../../cocos/scripting/lua-bindings/manual/CCLuaBridge.cpp \
     ../../cocos/scripting/lua-bindings/manual/CCLuaEngine.cpp \
@@ -59,5 +62,6 @@ SOURCES += \
     ../../cocos/scripting/lua-bindings/manual/tolua_fix.cpp \
     ../../cocos/scripting/lua-bindings/manual/lua_debugger.c \
     ../../cocos/scripting/lua-bindings/manual/lua_extensions.c \
+    ../../tests/HelloCocos2D/src/luabridge.cpp \
 
 #    ../../cocos/scripting/lua-bindings/manual/platform/qt/CCLuaObjcBridge.cpp

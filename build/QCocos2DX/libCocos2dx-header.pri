@@ -133,6 +133,7 @@ COCOS2D_INCLUDEPATH +=    $$COCOS2D_DIR/external/lua/tolua
 COCOS2D_INCLUDEPATH +=    $$COCOS2D_DIR/external/lua/luajit/include
 COCOS2D_INCLUDEPATH +=    $$COCOS2D_DIR/external/lua/luajit/src/src
 #COCOS2D_INCLUDEPATH +=    $$COCOS2D_DIR/external/lua/luasocket
+COCOS2D_INCLUDEPATH +=    $$COCOS2D_DIR/tests/HelloCocos2D/src
 
 
 INCLUDEPATH += $$COCOS2D_INCLUDEPATH
