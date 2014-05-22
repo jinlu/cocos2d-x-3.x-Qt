@@ -53,8 +53,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaEngine *pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 
-    LuaStack *pStack = pEngine->getLuaStack();
-    lua_State* L = pStack->getLuaState();
+//    LuaStack *pStack = pEngine->getLuaStack();
+//    lua_State* L = pStack->getLuaState();
 
 //    // load lua extensions
 //    luaopen_lua_extensions(L);
@@ -66,8 +66,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 //    CCLOG("------------------------------------------------");
 //    CCLOG("LOAD LUA FILE: %s", path.c_str());
 //    CCLOG("------------------------------------------------");
-//    pEngine->executeScriptFile(path.c_str());
-
     pEngine->executeScriptFile("src/hello.lua");
 
 #endif

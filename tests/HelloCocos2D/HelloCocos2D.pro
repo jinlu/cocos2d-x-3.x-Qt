@@ -42,13 +42,11 @@ SOURCES += main.cpp \
     src/MainWindow.cpp \
     src/AppDelegate.cpp \
     src/HelloWorldScene.cpp \
-    src/luabridge.cpp \
 
 HEADERS  += \
     src/MainWindow.h \
     src/AppDelegate.h \
     src/HelloWorldScene.h \
-    src/luabridge.h \
 
 FORMS    += \
     ui/MainWindow.ui

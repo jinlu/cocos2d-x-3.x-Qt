@@ -14,6 +14,22 @@ function __G__TRACKBACK__(msg)
     cclog("----------------------------------------")
 end
 
+function string.split(str,comma)
+
+    local arr = {}
+    
+    local expr = "([^"..comma.."]+)"    
+    for word in string.gmatch(str, expr) do
+        table.insert(arr,word)
+    end
+    
+    return arr
+    
+end
+
+local gSprite = nil
+local gPath = nil
+
 local function main()
     -- avoid memory leak
     collectgarbage("setpause", 100)
@@ -35,49 +51,6 @@ local function main()
     local visibleSize = cc.Director:getInstance():getVisibleSize()
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
-    -- add the moving dog
-    local function creatDog()
-        local frameWidth = 105
-        local frameHeight = 95
-
-        -- create dog animate
-        local textureDog = cc.Director:getInstance():getTextureCache():addImage("res/dog.png")
-        local rect = cc.rect(0, 0, frameWidth, frameHeight)
-        local frame0 = cc.SpriteFrame:createWithTexture(textureDog, rect)
-        rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
-        local frame1 = cc.SpriteFrame:createWithTexture(textureDog, rect)
-
-        local spriteDog = cc.Sprite:createWithSpriteFrame(frame0)
-        spriteDog.isPaused = false
-        spriteDog:setPosition(origin.x, origin.y + visibleSize.height / 4 * 3)
---[[
-        local animFrames = CCArray:create()
-
-        animFrames:addObject(frame0)
-        animFrames:addObject(frame1)
-]]--
-
-        local animation = cc.Animation:createWithSpriteFrames({frame0,frame1}, 0.5)
-        local animate = cc.Animate:create(animation);
-        spriteDog:runAction(cc.RepeatForever:create(animate))
-
-        -- moving dog at every frame
-        local function tick()
-            if spriteDog.isPaused then return end
-            local x, y = spriteDog:getPosition()
-            if x > origin.x + visibleSize.width then
-                x = origin.x
-            else
-                x = x + 1
-            end
-
-            spriteDog:setPositionX(x)
-        end
-
-        cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
-
-        return spriteDog
-    end
 
     -- create farm
     local function createLayerFarm()
@@ -108,38 +81,18 @@ local function main()
             end
         end
 
-        -- add moving dog
-        local spriteDog = creatDog()
-        layerFarm:addChild(spriteDog)
-
         -- handing touch events
-        local touchBeginPoint = nil
         local function onTouchBegan(touch, event)
-            local location = touch:getLocation()
-            cclog("onTouchBegan: %0.2f, %0.2f", location.x, location.y)
-            touchBeginPoint = {x = location.x, y = location.y}
-            spriteDog.isPaused = true
-            -- CCTOUCHBEGAN event must return true
-            return true
+
         end
         print(" handing touch events")
 
         local function onTouchMoved(touch, event)
-            local location = touch:getLocation()
-            cclog("onTouchMoved: %0.2f, %0.2f", location.x, location.y)
-            if touchBeginPoint then
-                local cx, cy = layerFarm:getPosition()
-                layerFarm:setPosition(cx + location.x - touchBeginPoint.x,
-                                      cy + location.y - touchBeginPoint.y)
-                touchBeginPoint = {x = location.x, y = location.y}
-            end
+
         end
 
         local function onTouchEnded(touch, event)
-            local location = touch:getLocation()
-            cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
-            touchBeginPoint = nil
-            spriteDog.isPaused = false
+            
         end
 
 
@@ -197,13 +150,6 @@ local function main()
 
     -- play background music, preload effect
 
-    -- uncomment below for the BlackBerry version
-    local bgMusicPath = nil 
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
-        bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.caf")
-    else
-        bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.mp3")
-    end
 
 --    cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
 --    local effectPath = cc.FileUtils:getInstance():fullPathForFilename("res/effect1.wav")
@@ -214,19 +160,56 @@ local function main()
     sceneGame:addChild(createLayerFarm())
     sceneGame:addChild(createLayerMenu())
 
-    print("Hello world ")
     --ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("res/BillmanDemo/BillmanDemo.ExportJson")
-    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("/Users/fight/Workspace/BillmanDemo/BillmanDemo.ExportJson")
     
 
-    local sprite = ccs.Armature:create("BillmanDemo")
-    sprite:setPosition(cc.p(480,320))
-    sceneGame:addChild(sprite)
-
-    local path = dd.LuaBridge:getInstance():getPath()
-    print(path)
-
     cc.Director:getInstance():runWithScene(sceneGame)
+
+    local function onEvent()
+
+        -- clear sprite
+
+        if (gPath) then
+            ccs.ArmatureDataManager:getInstance():removeArmatureData(gPath)
+        end
+
+        
+        if (gSprite) then
+            gSprite:removeFromParent()
+        end
+
+
+        -- get path
+        gPath = dd.LuaBridge:getInstance():getPath() 
+        -- print("path : [" .. gPath.."]")
+
+        -- create armature
+        if (gPath) then
+            ccs.ArmatureDataManager:getInstance():addArmatureFileInfo(gPath)
+
+            string.sub(gPath,1,string.len(gPath) - 11)
+
+            -- get armature name 
+            local array = string.split(gPath,'.')
+            array = string.split(array[1],'\/')
+            local armatureName = array[#array]
+
+            gSprite = ccs.Armature:create(armatureName)
+
+        end        
+
+        if (gSprite == nil) then
+            print (" error !")
+        end
+
+        gSprite:setPosition(cc.p(480,320))
+        sceneGame:addChild(gSprite)
+
+    end
+
+    local eventDispatcher = sceneGame:getEventDispatcher()
+    local listener = cc.EventListenerCustom:create("EVENT_TEST",onEvent)
+    eventDispatcher:addEventListenerWithFixedPriority(listener,1)
 
 end
 

@@ -20,14 +20,13 @@ LuaBridge* LuaBridge::getInstance()
 
 void LuaBridge::setPath(string str)
 {
-//    qDebug() << "LuaBridge::setPath : " << string;
-    CCLOG("LuaBridge::setPath :  %s ", str.c_str());
     path = str;
+    CCLOG("LuaBridge::setPath :  %s :  %lld ", path.c_str(), (long long)this);
 }
 
 const char* LuaBridge::getPath()
 {
-//    qDebug() << "LuaBridge::getPath : " << path;
+    CCLOG("LuaBridge::getPath :  %s : %lld ", path.c_str(), (long long )this);
     return path.c_str();
 }
 
