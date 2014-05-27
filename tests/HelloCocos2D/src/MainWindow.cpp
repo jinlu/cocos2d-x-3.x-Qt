@@ -148,9 +148,28 @@ void MainWindow::load()
 
 void MainWindow::save()
 {
+    lua_newtable(L);
+
+    lua_pushstring(L, "unitData");
     setUnitData();
+    lua_settable(L,-3);
+
+    lua_pushstring(L, "movementList");
     setMovementList();
+    lua_settable(L,-3);
+
+    lua_pushstring(L, "skillData");
     setSkillData();
+    lua_settable(L,-3);
+
+    lua_setglobal(L,"tmpConfig");
+
+    luaL_dostring(L, "print(\"tmpConfig.skillData.flamingChariot.skillname\")");
+    luaL_dostring(L, "print(tmpConfig.skillData.flamingChariot.skillname)");
+
+    luaL_dostring(L, "file = io.open('../Resources/tmpConfig.lua','w')");
+    luaL_dostring(L, "persistence.store(file,tmpConfig)");
+    luaL_dostring(L, "print(\" save succeed! \")");
 }
 
 QWidget* MainWindow::getGLViewSuperWidget()
@@ -259,12 +278,12 @@ void MainWindow::setUnitData()
 //        qDebug() << "5 : " << edit5->text();
 
 //        lua_setglobal(L,"unitData");
-        luaL_dostring(L, "print(-->unitData)");
-        luaL_dostring(L, "print(unitData.speed)");
-        luaL_dostring(L, "print(unitData.discoverRadii)");
-        luaL_dostring(L, "print(unitData.discoverOffset)");
-        luaL_dostring(L, "print(unitData.hurtBasePoint)");
-        luaL_dostring(L, "print(unitData.hurtVar)");
+//        luaL_dostring(L, "print(-->unitData)");
+//        luaL_dostring(L, "print(unitData.speed)");
+//        luaL_dostring(L, "print(unitData.discoverRadii)");
+//        luaL_dostring(L, "print(unitData.discoverOffset)");
+//        luaL_dostring(L, "print(unitData.hurtBasePoint)");
+//        luaL_dostring(L, "print(unitData.hurtVar)");
     }
 }
 
@@ -338,21 +357,21 @@ void MainWindow::setMovementList()
         setMovementItem(edit11->text().toStdString().c_str(),edit12->text().toInt());
         lua_settable(L,-3);
 
-        lua_setglobal(L,"movementList");
+//        lua_setglobal(L,"movementList");
 
-        luaL_dostring(L, "print(\"-->movementList\")");
-        luaL_dostring(L, "print(movementList.attack.category)");
-        luaL_dostring(L, "print(movementList.attack.aim)");
-        luaL_dostring(L, "print(movementList.skill_U.category)");
-        luaL_dostring(L, "print(movementList.skill_U.aim)");
-        luaL_dostring(L, "print(movementList.skill_I.category)");
-        luaL_dostring(L, "print(movementList.skill_I.aim)");
-        luaL_dostring(L, "print(movementList.skill_O.category)");
-        luaL_dostring(L, "print(movementList.skill_O.aim)");
-        luaL_dostring(L, "print(movementList.skill_L.category)");
-        luaL_dostring(L, "print(movementList.skill_L.aim)");
-        luaL_dostring(L, "print(movementList.skill_H.category)");
-        luaL_dostring(L, "print(movementList.skill_H.aim)");
+//        luaL_dostring(L, "print(\"-->movementList\")");
+//        luaL_dostring(L, "print(movementList.attack.category)");
+//        luaL_dostring(L, "print(movementList.attack.aim)");
+//        luaL_dostring(L, "print(movementList.skill_U.category)");
+//        luaL_dostring(L, "print(movementList.skill_U.aim)");
+//        luaL_dostring(L, "print(movementList.skill_I.category)");
+//        luaL_dostring(L, "print(movementList.skill_I.aim)");
+//        luaL_dostring(L, "print(movementList.skill_O.category)");
+//        luaL_dostring(L, "print(movementList.skill_O.aim)");
+//        luaL_dostring(L, "print(movementList.skill_L.category)");
+//        luaL_dostring(L, "print(movementList.skill_L.aim)");
+//        luaL_dostring(L, "print(movementList.skill_H.category)");
+//        luaL_dostring(L, "print(movementList.skill_H.aim)");
     }
 }
 
@@ -394,12 +413,10 @@ void MainWindow::setSkillData()
                 QLineEdit *lineEdit1 = group->findChild<QLineEdit*>(string);
                 if (lineEdit1)
                 {
-//                    if (lineEdit1->validator()->validate() == QValidator.Invalid)
-//                    {
-//                        qDebug() << " invalidate ";
-//                    }
-
                     lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
+
+//                    lineEdit1->text().
+
                     lua_pushstring(L, lineEdit1->text().toStdString().c_str());
                     lua_settable(L,-3);
                 }
@@ -409,23 +426,22 @@ void MainWindow::setSkillData()
         }
     }
 
-    lua_setglobal(L,"skillData");
+//    lua_setglobal(L,"skillData");
 
-    luaL_dostring(L, "print(\"-->skillData\")");
-    luaL_dostring(L, "print(skillData.attack_1.skillname)");
-    luaL_dostring(L, "print(skillData.attack_1.category)");
-    luaL_dostring(L, "print(skillData.attack_1.hurtMotion)");
-    luaL_dostring(L, "print(skillData.attack_1.hurtStiffTime)");
-    luaL_dostring(L, "print(skillData.attack_1.hurtMovingTime)");
-    luaL_dostring(L, "print(skillData.attack_1.bSpeedValue)");
-    luaL_dostring(L, "print(skillData.attack_1.beatFlip)");
-    luaL_dostring(L, "print(skillData.attack_1.float)");
-    luaL_dostring(L, "print(skillData.attack_1.height)");
-    luaL_dostring(L, "print(skillData.attack_1.beatFloat)");
-    luaL_dostring(L, "print(skillData.attack_1.beatFloatDuration)");
-    luaL_dostring(L, "print(skillData.attack_1.hurtEffect)");
-    luaL_dostring(L, "print(skillData.attack_1.loops)");
-
+//    luaL_dostring(L, "print(\"-->skillData\")");
+//    luaL_dostring(L, "print(skillData.attack_1.skillname)");
+//    luaL_dostring(L, "print(skillData.attack_1.category)");
+//    luaL_dostring(L, "print(skillData.attack_1.hurtMotion)");
+//    luaL_dostring(L, "print(skillData.attack_1.hurtStiffTime)");
+//    luaL_dostring(L, "print(skillData.attack_1.hurtMovingTime)");
+//    luaL_dostring(L, "print(skillData.attack_1.bSpeedValue)");
+//    luaL_dostring(L, "print(skillData.attack_1.beatFlip)");
+//    luaL_dostring(L, "print(skillData.attack_1.float)");
+//    luaL_dostring(L, "print(skillData.attack_1.height)");
+//    luaL_dostring(L, "print(skillData.attack_1.beatFloat)");
+//    luaL_dostring(L, "print(skillData.attack_1.beatFloatDuration)");
+//    luaL_dostring(L, "print(skillData.attack_1.hurtEffect)");
+//    luaL_dostring(L, "print(skillData.attack_1.loops)");
 }
 
 void MainWindow::setValidator()
