@@ -61,13 +61,13 @@
     <property name="geometry">
      <rect>
       <x>970</x>
-      <y>30</y>
+      <y>10</y>
       <width>301</width>
       <height>541</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -4486,6 +4486,12 @@
             <height>21</height>
            </rect>
           </property>
+          <property name="cursor">
+           <cursorShape>SizeVerCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string extracomment="技能名称"/>
+          </property>
          </widget>
          <widget class="QLabel" name="label_158">
           <property name="geometry">
@@ -4768,6 +4774,19 @@
       </widget>
      </widget>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>1076</x>
+      <y>556</y>
+      <width>114</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

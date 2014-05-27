@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-//#include "uimanager.h"
+
+#include "CCLuaEngine.h"
 
 //#if QT_VERSION >= 0x050000
 //#include <QtWidgets/QMainWindow>
@@ -27,8 +28,8 @@ protected:
 
 public:
     QWidget* getGLViewSuperWidget(void);
-    void print();
     void load();
+    void save();
 
 //private slots:
 private Q_SLOTS:
@@ -36,15 +37,27 @@ private Q_SLOTS:
     void on_actionOpen_triggered();
     void on_comboBox_currentIndexChanged(int index);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-    UIManager      *manager;
 
     // index 0-13
     QString getSkillActionName(int index);
 
     // index 0-11
     QString getSkillKeyName(int index);
+
+    // data
+    void setUnitData();
+    void setMovementItem(const char* category, int aim);
+    void setMovementList();
+    void setSkillData();
+
+    // other
+    void setValidator();
+
+    lua_State *L;
 };
 
 #endif // MAINWINDOW_H

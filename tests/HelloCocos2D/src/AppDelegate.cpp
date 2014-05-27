@@ -68,8 +68,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #endif
 
-    m_mainWindow.print();
     m_mainWindow.load();
+//    m_mainWindow.save();
     m_mainWindow.show();
 
     return true;
