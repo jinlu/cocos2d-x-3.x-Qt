@@ -1,5 +1,17 @@
+-- package.path = package.path .. './src/?.lua;./?.lua'
+
 require "Cocos2d"
 require "Cocos2dConstants"
+
+require "persistence"
+
+color = {    
+    r = 1,
+    g = 1,
+    b = 0 
+}
+
+print(" color is defined!")
 
 -- cclog
 cclog = function(...)
@@ -162,10 +174,22 @@ local function main()
 
     --ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("res/BillmanDemo/BillmanDemo.ExportJson")
     
+    global_config = persistence.load("../Resources/src/config.lua")
+    
+    print("-----config.lua------")
+    print(global_config.unitData.speed)
+    print(global_config.skillData.attack_4.skillname)
+    print("-----config.lua end ------")
 
     cc.Director:getInstance():runWithScene(sceneGame)
 
     local function onEvent()
+
+        -- print("on Event")
+        
+        -- print(color.r)
+        -- print(color.g)
+        -- print(color.b)
 
         -- clear sprite
 
