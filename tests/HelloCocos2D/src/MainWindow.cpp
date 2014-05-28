@@ -128,6 +128,41 @@ void MainWindow::load()
               break;
           }
 
+          for (int j = 0; j < 2; j++)
+          {
+              // combo 1
+              QString string = QString("comboBox_%1_%2")
+                          .arg(i + 1)
+                          .arg(j + 1);
+              QComboBox *comboBox = group->findChild<QComboBox*>(string);
+              if (comboBox)
+              {
+                  if (j == 0)
+                  {
+                      QString code = QString("global_config.skillData.%1.category")
+                              .arg(getSkillActionName(i));
+                      const char* str = Lua2C::getStringValue(L,code.toStdString().c_str());
+                      int index = comboBox->findText(QString(str),Qt::MatchExactly);
+                      comboBox->setCurrentIndex(index);
+                  }
+                  else if(j == 1)
+                  {
+                      QString code = QString("global_config.skillData.%1.beatFlip")
+                              .arg(getSkillActionName(i));
+                      bool value = Lua2C::getBoolValue(L,code.toStdString().c_str());
+
+                      if (value)
+                      {
+                          comboBox->setCurrentIndex(1);
+                      }
+                      else
+                      {
+                          comboBox->setCurrentIndex(0);
+                      }
+                  }
+              }
+          }
+
           for (int j = 0; j < 13; j++)
           {
               QString string = QString("lineEdit_%1_%2")
