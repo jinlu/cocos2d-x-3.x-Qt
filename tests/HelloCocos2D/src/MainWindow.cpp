@@ -47,9 +47,8 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::prepareLua()
 {
-    luaL_dostring(L, "print 'hello world'");
     luaL_dostring(L, "GLoader = require 'persistence'");
-    luaL_dostring(L, "if (GLoader == nil) then print 'GLoader is nil' else print 'GLoader is good !' end");
+//    luaL_dostring(L, "if (GLoader == nil) then print 'GLoader is nil' else print 'GLoader is good !' end");
 }
 
 void MainWindow::load()
@@ -184,7 +183,7 @@ void MainWindow::load()
   }
 }
 
-void MainWindow::save()
+void MainWindow::save(const char* path)
 {
     lua_newtable(L);
 
@@ -202,10 +201,19 @@ void MainWindow::save()
 
     lua_setglobal(L,"tmpConfig");
 
-    luaL_dostring(L, "print(\"tmpConfig.skillData.flamingChariot.skillname\")");
-    luaL_dostring(L, "print(tmpConfig.skillData.flamingChariot.skillname)");
+//    luaL_dostring(L, "print(\"tmpConfig.skillData.flamingChariot.skillname\")");
+//    luaL_dostring(L, "print(tmpConfig.skillData.flamingChariot.skillname)");
 
-    luaL_dostring(L, "file = io.open('../Resources/tmpConfig.lua','w')");
+    if (path && strlen(path) > 0)
+    {
+        QString code = QString("file = io.open(\"%1\",'w')").arg(path);
+        luaL_dostring(L, code.toStdString().c_str());
+    }
+    else
+    {
+        luaL_dostring(L, "file = io.open(GPath,'w')");
+    }
+    luaL_dostring(L, "if (file == nil) then print(\"ERROR:file open error! file path :\",GPath) end");
     luaL_dostring(L, "persistence.store(file,tmpConfig)");
     luaL_dostring(L, "print(\" save succeed! \")");
 }
@@ -684,8 +692,15 @@ void MainWindow::on_actionOpen_triggered()
         tr("Open Config"), "../Resources", tr("Lua Files (*.lua)"));
     if (fileName.length() > 0)
     {
-        QString path = QString("global_config = GLoader.load(\"%1\")").arg(fileName);
+        // set path
+        QString path = QString("GPath = \"%1\"").arg(fileName);
         luaL_dostring(L,path.toStdString().c_str());
+//        qDebug() << "path:"<<path;
+//        luaL_dostring(L,"print (GPath)");
+
+        // load config
+        QString code = QString("global_config = GLoader.load(\"%1\")").arg(fileName);
+        luaL_dostring(L,code.toStdString().c_str());
 //        luaL_dostring(L,"print (global_config.unitData.speed)");
         load();
     }
@@ -694,4 +709,14 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::on_actionSave_triggered()
 {
     save();
+}
+
+void MainWindow::on_actionSave_AS_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Config"), "../Resources", tr("Lua Files (*.lua)"));
+    if (fileName.length() > 0)
+    {
+        save(fileName.toStdString().c_str());
+    }
 }

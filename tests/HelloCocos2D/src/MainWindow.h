@@ -7,7 +7,7 @@
 //#if QT_VERSION >= 0x050000
 //#include <QtWidgets/QMainWindow>
 //#else
-#include <QMainWindow>4ewee3w3cwc3skmiu treh
+#include <QMainWindow>
 //#endif
 
 class UIManager;
@@ -31,7 +31,7 @@ public:
     QWidget* getGLViewSuperWidget(void);
     void prepareLua();
     void load();
-    void save();
+    void save(const char* path = NULL);
 
 //private slots:
 private Q_SLOTS:
@@ -39,6 +39,8 @@ private Q_SLOTS:
     void on_actionOpen_triggered();
     void on_comboBox_currentIndexChanged(int index);
     void on_actionSave_triggered();
+
+    void on_actionSave_AS_triggered();
 
 private:
     Ui::MainWindow *ui;
