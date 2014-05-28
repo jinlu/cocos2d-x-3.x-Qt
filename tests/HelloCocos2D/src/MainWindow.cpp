@@ -1,10 +1,10 @@
+#include <QFileDialog>
+#include <QDebug>
 #include "src/MainWindow.h"
 #include "ui_MainWindow.h"
 #include "cocos2d.h"
-#include <QFileDialog>
 #include "luabridge.h"
 #include "CCEventCustom.h"
-#include <QDebug>
 #include "stdio.h"
 #include "lua2c.h"
 #include "lua_extensions.h"
@@ -413,12 +413,22 @@ void MainWindow::setSkillData()
                 QLineEdit *lineEdit1 = group->findChild<QLineEdit*>(string);
                 if (lineEdit1)
                 {
-                    lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
+                    const QIntValidator* validator = dynamic_cast<const QIntValidator*>(lineEdit1->validator());
+                    if (validator)
+                    {
+//                        qDebug() << "number : " << lineEdit1->text().toFloat();
+                        lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
+                        lua_pushnumber(L, lineEdit1->text().toDouble());
+                        lua_settable(L,-3);
+                    }
+                    else
+                    {
+//                        qDebug() << "text : " << lineEdit1->text();
+                        lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
+                        lua_pushstring(L, lineEdit1->text().toStdString().c_str());
+                        lua_settable(L,-3);
+                    }
 
-//                    lineEdit1->text().
-
-                    lua_pushstring(L, lineEdit1->text().toStdString().c_str());
-                    lua_settable(L,-3);
                 }
              }
 
@@ -502,7 +512,7 @@ void MainWindow::setValidator()
                         // hurtMovingTime
                         case 4:
                         {
-                            QDoubleValidator *validator = new QDoubleValidator(this);
+                            QValidator *validator = new QIntValidator(0, 999999, this);
                             lineEdit1->setValidator(validator);
                         }
                             break;
