@@ -5,7 +5,6 @@
 #include "cocos2d.h"
 #include "luabridge.h"
 #include "CCEventCustom.h"
-#include "stdio.h"
 #include "lua2c.h"
 #include "lua_extensions.h"
 
@@ -78,31 +77,34 @@ void MainWindow::load()
   QWidget *tab2_group = tab2->findChild<QWidget*>(tr("groupBox_2"));
   if (tab2_group)
   {
-      QLineEdit *edit1 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_1"));
       QLineEdit *edit2 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_2"));
-      QLineEdit *edit3 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_3"));
       QLineEdit *edit4 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_4"));
-      QLineEdit *edit5 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_5"));
       QLineEdit *edit6 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_6"));
-      QLineEdit *edit7 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_7"));
       QLineEdit *edit8 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_8"));
-      QLineEdit *edit9 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_9"));
       QLineEdit *edit10 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_10"));
-      QLineEdit *edit11 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_11"));
       QLineEdit *edit12 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_12"));
 
-      edit1->setText(Lua2C::getStringValue(L,"global_config.movementList.attack.category"));
       edit2->setText(Lua2C::getStringValue(L,"global_config.movementList.attack.aim"));
-      edit3->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_U.category"));
       edit4->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_U.aim"));
-      edit5->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_I.category"));
       edit6->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_I.aim"));
-      edit7->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_O.category"));
       edit8->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_O.aim"));
-      edit9->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_L.category"));
       edit10->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_L.aim"));
-      edit11->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_H.category"));
       edit12->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_H.aim"));
+
+      QComboBox *combo1 = tab2_group->findChild<QComboBox*>(tr("comboBox_m1"));
+      QComboBox *combo2 = tab2_group->findChild<QComboBox*>(tr("comboBox_m2"));
+      QComboBox *combo3 = tab2_group->findChild<QComboBox*>(tr("comboBox_m3"));
+      QComboBox *combo4 = tab2_group->findChild<QComboBox*>(tr("comboBox_m4"));
+      QComboBox *combo5 = tab2_group->findChild<QComboBox*>(tr("comboBox_m5"));
+      QComboBox *combo6 = tab2_group->findChild<QComboBox*>(tr("comboBox_m6"));
+
+      setComboText(combo1,Lua2C::getStringValue(L,"global_config.movementList.attack.category"));
+      setComboText(combo2,Lua2C::getStringValue(L,"global_config.movementList.skill_U.category"));
+      setComboText(combo3,Lua2C::getStringValue(L,"global_config.movementList.skill_I.category"));
+      setComboText(combo4,Lua2C::getStringValue(L,"global_config.movementList.skill_O.category"));
+      setComboText(combo5,Lua2C::getStringValue(L,"global_config.movementList.skill_L.category"));
+      setComboText(combo6,Lua2C::getStringValue(L,"global_config.movementList.skill_H.category"));
+
   }
 
   // load skillData
@@ -142,8 +144,9 @@ void MainWindow::load()
                       QString code = QString("global_config.skillData.%1.category")
                               .arg(getSkillActionName(i));
                       const char* str = Lua2C::getStringValue(L,code.toStdString().c_str());
-                      int index = comboBox->findText(QString(str),Qt::MatchExactly);
-                      comboBox->setCurrentIndex(index);
+//                      int index = comboBox->findText(QString(str),Qt::MatchExactly);
+//                      comboBox->setCurrentIndex(index);
+                      setComboText(comboBox,QString(str));
                   }
                   else if(j == 1)
                   {
@@ -347,18 +350,25 @@ void MainWindow::setMovementList()
 
     if (tab2_group)
     {
-        QLineEdit *edit1 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_1"));
+//        QLineEdit *edit1 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_1"));
         QLineEdit *edit2 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_2"));
-        QLineEdit *edit3 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_3"));
+//        QLineEdit *edit3 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_3"));
         QLineEdit *edit4 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_4"));
-        QLineEdit *edit5 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_5"));
+//        QLineEdit *edit5 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_5"));
         QLineEdit *edit6 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_6"));
-        QLineEdit *edit7 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_7"));
+//        QLineEdit *edit7 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_7"));
         QLineEdit *edit8 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_8"));
-        QLineEdit *edit9 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_9"));
+//        QLineEdit *edit9 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_9"));
         QLineEdit *edit10 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_10"));
-        QLineEdit *edit11 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_11"));
+//        QLineEdit *edit11 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_11"));
         QLineEdit *edit12 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_12"));
+
+        QComboBox *combo1 = tab2_group->findChild<QComboBox*>(tr("comboBox_m1"));
+        QComboBox *combo2 = tab2_group->findChild<QComboBox*>(tr("comboBox_m2"));
+        QComboBox *combo3 = tab2_group->findChild<QComboBox*>(tr("comboBox_m3"));
+        QComboBox *combo4 = tab2_group->findChild<QComboBox*>(tr("comboBox_m4"));
+        QComboBox *combo5 = tab2_group->findChild<QComboBox*>(tr("comboBox_m5"));
+        QComboBox *combo6 = tab2_group->findChild<QComboBox*>(tr("comboBox_m6"));
 
         lua_newtable(L);
 
@@ -369,27 +379,27 @@ void MainWindow::setMovementList()
            },
          */
         lua_pushstring(L,"attack");
-        setMovementItem(edit1->text().toStdString().c_str(),edit2->text().toInt());
+        setMovementItem(combo1->currentText().toStdString().c_str(),edit2->text().toInt());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_U");
-        setMovementItem(edit3->text().toStdString().c_str(),edit4->text().toInt());
+        setMovementItem(combo2->currentText().toStdString().c_str(),edit4->text().toInt());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_I");
-        setMovementItem(edit5->text().toStdString().c_str(),edit6->text().toInt());
+        setMovementItem(combo3->currentText().toStdString().c_str(),edit6->text().toInt());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_O");
-        setMovementItem(edit7->text().toStdString().c_str(),edit8->text().toInt());
+        setMovementItem(combo4->currentText().toStdString().c_str(),edit8->text().toInt());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_L");
-        setMovementItem(edit9->text().toStdString().c_str(),edit10->text().toInt());
+        setMovementItem(combo5->currentText().toStdString().c_str(),edit10->text().toInt());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_H");
-        setMovementItem(edit11->text().toStdString().c_str(),edit12->text().toInt());
+        setMovementItem(combo6->currentText().toStdString().c_str(),edit12->text().toInt());
         lua_settable(L,-3);
 
 //        lua_setglobal(L,"movementList");
@@ -519,6 +529,48 @@ void MainWindow::setSkillData()
 void MainWindow::setValidator()
 {
     QTabWidget *tabWidget = this->findChild<QTabWidget *>(tr("tabWidget"));
+
+    // unitdata
+    QWidget *tab1 = tabWidget->findChild<QWidget*>(tr("tab_1"));
+    QWidget *tab1_group = tab1->findChild<QWidget*>(tr("groupBox"));
+    QValidator *validator = new QIntValidator(0, 999999, this);
+
+    if (tab1_group)
+    {
+        QLineEdit *edit1 = tab1_group->findChild<QLineEdit*>(tr("lineEdit"));
+        QLineEdit *edit2 = tab1_group->findChild<QLineEdit*>(tr("lineEdit_2"));
+        QLineEdit *edit3 = tab1_group->findChild<QLineEdit*>(tr("lineEdit_3"));
+        QLineEdit *edit4 = tab1_group->findChild<QLineEdit*>(tr("lineEdit_4"));
+        QLineEdit *edit5 = tab1_group->findChild<QLineEdit*>(tr("lineEdit_5"));
+
+        edit1->setValidator(validator);
+        edit2->setValidator(validator);
+        edit3->setValidator(validator);
+        edit4->setValidator(validator);
+        edit5->setValidator(validator);
+    }
+
+    // load movementList
+    QWidget *tab2 = tabWidget->findChild<QWidget*>(tr("tab_2"));
+    QWidget *tab2_group = tab2->findChild<QWidget*>(tr("groupBox_2"));
+    if (tab2_group)
+    {
+        QLineEdit *edit2 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_2"));
+        QLineEdit *edit4 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_4"));
+        QLineEdit *edit6 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_6"));
+        QLineEdit *edit8 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_8"));
+        QLineEdit *edit10 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_10"));
+        QLineEdit *edit12 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_12"));
+
+        edit2->setValidator(validator);
+        edit4->setValidator(validator);
+        edit6->setValidator(validator);
+        edit8->setValidator(validator);
+        edit10->setValidator(validator);
+        edit12->setValidator(validator);
+    }
+
+    // skill
     QWidget *tab3 = tabWidget->findChild<QWidget*>(tr("tab_3"));
     QWidget *root = tab3->findChild<QWidget*>(tr("root"));
 
@@ -638,4 +690,16 @@ void MainWindow::setValidator()
 void MainWindow::on_pushButton_clicked()
 {
     save();
+}
+
+void MainWindow::setComboText(QComboBox*comboBox,QString text)
+{
+    if (comboBox)
+    {
+        int index = comboBox->findText(text,Qt::MatchExactly);
+        if (index >= 0 && index < comboBox->count())
+        {
+            comboBox->setCurrentIndex(index);
+        }
+    }
 }

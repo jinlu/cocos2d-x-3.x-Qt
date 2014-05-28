@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "CCLuaEngine.h"
+#include "qcombobox.h"
 
 //#if QT_VERSION >= 0x050000
 //#include <QtWidgets/QMainWindow>
@@ -57,6 +58,7 @@ private:
     // other
     void setValidator();
 
+    void setComboText(QComboBox* comboBox,QString text);
     lua_State *L;
 };
 
