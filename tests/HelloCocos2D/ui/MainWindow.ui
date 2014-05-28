@@ -67,7 +67,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -729,16 +729,6 @@
            <string>category</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_1_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
-          </property>
-         </widget>
          <widget class="QLabel" name="name_3">
           <property name="geometry">
            <rect>
@@ -842,16 +832,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_1_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="name_8">
@@ -992,6 +972,46 @@
            </rect>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_1_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_1_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_2">
@@ -1044,16 +1064,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_2_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="item_3">
@@ -1159,16 +1169,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_2_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="item_8">
@@ -1309,6 +1309,46 @@
            </rect>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_2_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_2_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_3">
@@ -1358,16 +1398,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_3_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_38">
@@ -1473,16 +1503,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_3_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_43">
@@ -1623,6 +1643,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_3_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_3_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_4">
@@ -1672,16 +1732,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_4_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_60">
@@ -1787,16 +1837,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_4_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_65">
@@ -1937,6 +1977,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_4_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_4_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_5">
@@ -1986,16 +2066,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_5_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_71">
@@ -2101,16 +2171,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_5_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_76">
@@ -2251,6 +2311,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_5_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_5_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_6">
@@ -2300,16 +2400,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_6_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_82">
@@ -2415,16 +2505,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_6_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_87">
@@ -2565,6 +2645,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_6_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_6_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_7">
@@ -2614,16 +2734,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_7_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_93">
@@ -2729,16 +2839,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_7_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_98">
@@ -2879,6 +2979,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_7_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_7_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_8">
@@ -2928,16 +3068,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_8_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_104">
@@ -3043,16 +3173,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_8_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_109">
@@ -3193,6 +3313,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_8_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_8_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_9">
@@ -3242,16 +3402,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_9_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_115">
@@ -3357,16 +3507,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_9_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_120">
@@ -3507,6 +3647,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_9_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_9_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_10">
@@ -3556,16 +3736,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_10_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_126">
@@ -3671,16 +3841,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_10_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_131">
@@ -3821,6 +3981,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_10_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_10_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_11">
@@ -3870,16 +4070,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_11_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_137">
@@ -3985,16 +4175,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_11_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_142">
@@ -4135,6 +4315,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_11_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_11_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_12">
@@ -4184,16 +4404,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_12_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_148">
@@ -4299,16 +4509,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_12_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_153">
@@ -4449,6 +4649,46 @@
            <string>loops</string>
           </property>
          </widget>
+         <widget class="QComboBox" name="comboBox_12_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_12_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="page_13">
@@ -4504,16 +4744,6 @@
           </property>
           <property name="text">
            <string>category</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_13_1">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_159">
@@ -4619,16 +4849,6 @@
           </property>
           <property name="text">
            <string>beatFlip</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_13_6">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>220</y>
-            <width>113</width>
-            <height>21</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_164">
@@ -4768,6 +4988,46 @@
           <property name="text">
            <string>loops</string>
           </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_13_2">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>220</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>false</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>true</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QComboBox" name="comboBox_13_1">
+          <property name="geometry">
+           <rect>
+            <x>128</x>
+            <y>68</y>
+            <width>117</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>skill</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>attack</string>
+           </property>
+          </item>
          </widget>
         </widget>
        </widget>

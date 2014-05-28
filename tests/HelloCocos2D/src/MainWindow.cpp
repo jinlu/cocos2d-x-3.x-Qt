@@ -405,6 +405,33 @@ void MainWindow::setSkillData()
             lua_pushstring(L, getSkillActionName(i).toStdString().c_str());
             lua_newtable(L);
 
+
+            for (int j = 0; j < 2; j++)
+            {
+                // combo 1
+                QString string = QString("comboBox_%1_%2")
+                            .arg(i + 1)
+                            .arg(j + 1);
+                QComboBox *comboBox = group->findChild<QComboBox*>(string);
+                if (comboBox)
+                {
+                    if (j == 0)
+                    {
+                        lua_pushstring(L, "category");
+                        lua_pushstring(L, comboBox->currentText().toStdString().c_str());
+                        lua_settable(L,-3);
+                    }
+                    else if(j == 1)
+                    {
+                        bool value = (QString::compare(comboBox->currentText(),"true",Qt::CaseSensitive) == 0);
+                        lua_pushstring(L, "beatFlip");
+                        lua_pushboolean(L, value);
+                        lua_settable(L,-3);
+                    }
+                }
+            }
+
+            // line Edit
             for (int j = 0; j < 13; j++)
             {
                 QString string = QString("lineEdit_%1_%2")
