@@ -45,13 +45,15 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
+void MainWindow::prepareLua()
+{
+    luaL_dostring(L, "print 'hello world'");
+    luaL_dostring(L, "GLoader = require 'persistence'");
+    luaL_dostring(L, "if (GLoader == nil) then print 'GLoader is nil' else print 'GLoader is good !' end");
+}
+
 void MainWindow::load()
 {
-  qDebug() << "MainWindow:load";
-
-  LuaEngine *pEngine = LuaEngine::getInstance();
-  lua_State *L = pEngine->getLuaStack()->getLuaState();
-
   QTabWidget *tabWidget = this->findChild<QTabWidget *>(tr("tabWidget"));
 
   // load unitdata
@@ -144,8 +146,6 @@ void MainWindow::load()
                       QString code = QString("global_config.skillData.%1.category")
                               .arg(getSkillActionName(i));
                       const char* str = Lua2C::getStringValue(L,code.toStdString().c_str());
-//                      int index = comboBox->findText(QString(str),Qt::MatchExactly);
-//                      comboBox->setCurrentIndex(index);
                       setComboText(comboBox,QString(str));
                   }
                   else if(j == 1)
@@ -213,32 +213,6 @@ void MainWindow::save()
 QWidget* MainWindow::getGLViewSuperWidget()
 {
     return ui->widget;
-}
-
-void MainWindow::on_actionOpen_triggered()
-{
-    QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Image"), "/Users/fight ", tr("Image Files (*.ExportJson)"));
-
-    LuaBridge::getInstance()->setPath(fileName.toStdString());
-
-    auto scene = Director::getInstance()->getRunningScene();
-    auto eventDispatcher = scene->getEventDispatcher();
-    EventCustom event("EVENT_TEST");
-    eventDispatcher->dispatchEvent(&event);
-
-}
-
-void MainWindow::on_comboBox_currentIndexChanged(int index)
-{
-//    qDebug() << "Combo Index : " << index;
-
-    QStackedWidget *stackedWidget = this->findChild<QStackedWidget *>(tr("stackedWidget"));
-    if (index >= 0 && index < stackedWidget->count())
-    {
-        stackedWidget->setCurrentIndex(index);
-    }
-
 }
 
 // index 0-13
@@ -350,17 +324,11 @@ void MainWindow::setMovementList()
 
     if (tab2_group)
     {
-//        QLineEdit *edit1 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_1"));
         QLineEdit *edit2 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_2"));
-//        QLineEdit *edit3 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_3"));
         QLineEdit *edit4 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_4"));
-//        QLineEdit *edit5 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_5"));
         QLineEdit *edit6 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_6"));
-//        QLineEdit *edit7 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_7"));
         QLineEdit *edit8 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_8"));
-//        QLineEdit *edit9 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_9"));
         QLineEdit *edit10 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_10"));
-//        QLineEdit *edit11 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_11"));
         QLineEdit *edit12 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_12"));
 
         QComboBox *combo1 = tab2_group->findChild<QComboBox*>(tr("comboBox_m1"));
@@ -687,11 +655,6 @@ void MainWindow::setValidator()
     }
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    save();
-}
-
 void MainWindow::setComboText(QComboBox*comboBox,QString text)
 {
     if (comboBox)
@@ -702,4 +665,33 @@ void MainWindow::setComboText(QComboBox*comboBox,QString text)
             comboBox->setCurrentIndex(index);
         }
     }
+}
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+//    qDebug() << "Combo Index : " << index;
+
+    QStackedWidget *stackedWidget = this->findChild<QStackedWidget *>(tr("stackedWidget"));
+    if (index >= 0 && index < stackedWidget->count())
+    {
+        stackedWidget->setCurrentIndex(index);
+    }
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Config"), "../Resources", tr("Lua Files (*.lua)"));
+    if (fileName.length() > 0)
+    {
+        QString path = QString("global_config = GLoader.load(\"%1\")").arg(fileName);
+        luaL_dostring(L,path.toStdString().c_str());
+//        luaL_dostring(L,"print (global_config.unitData.speed)");
+        load();
+    }
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    save();
 }

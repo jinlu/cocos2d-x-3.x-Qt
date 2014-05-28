@@ -3,7 +3,7 @@
 require "Cocos2d"
 require "Cocos2dConstants"
 
-require "persistence"
+-- require "persistence"
 
 color = {    
     r = 1,
@@ -174,12 +174,12 @@ local function main()
 
     --ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("res/BillmanDemo/BillmanDemo.ExportJson")
     
-    global_config = persistence.load("../Resources/src/config.lua")
+    -- global_config = persistence.load("../Resources/src/config.lua")
     
-    print("-----config.lua------")
-    print(global_config.unitData.speed)
-    print(global_config.skillData.attack_4.skillname)
-    print("-----config.lua end ------")
+    -- print("-----config.lua------")
+    -- print(global_config.unitData.speed)
+    -- print(global_config.skillData.attack_4.skillname)
+    -- print("-----config.lua end ------")
 
     cc.Director:getInstance():runWithScene(sceneGame)
 

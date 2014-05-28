@@ -29,6 +29,7 @@ protected:
 
 public:
     QWidget* getGLViewSuperWidget(void);
+    void prepareLua();
     void load();
     void save();
 
@@ -37,8 +38,7 @@ private Q_SLOTS:
 
     void on_actionOpen_triggered();
     void on_comboBox_currentIndexChanged(int index);
-
-    void on_pushButton_clicked();
+    void on_actionSave_triggered();
 
 private:
     Ui::MainWindow *ui;

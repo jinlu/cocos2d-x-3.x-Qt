@@ -67,9 +67,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pEngine->executeScriptFile("src/hello.lua");
 
 #endif
-
-    m_mainWindow.load();
-//    m_mainWindow.save();
+    m_mainWindow.prepareLua();
     m_mainWindow.show();
 
     return true;
