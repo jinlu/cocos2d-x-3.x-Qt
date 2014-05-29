@@ -29,7 +29,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     Director* pDirector = Director::getInstance();
     cocos2d::GLView* eglView = cocos2d::GLView::createWithWidget(m_mainWindow.getGLViewSuperWidget());
-//    cocos2d::GLView *eglView = cocos2d::GLView::createWithRect("HelloCocos2d",cocos2d::Rect(0,0,960,640));
 
     eglView->setDesignResolutionSize(960,640,ResolutionPolicy::EXACT_FIT);
     pDirector->setOpenGLView(eglView);
@@ -51,27 +50,28 @@ bool AppDelegate::applicationDidFinishLaunching()
     // register lua engine
     LuaEngine *pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-
-//    LuaStack *pStack = pEngine->getLuaStack();
-//    lua_State* L = pStack->getLuaState();
-
-//    // load lua extensions
-//    luaopen_lua_extensions(L);
+    lua_State *L = pEngine->getLuaStack()->getLuaState();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     luaopen_cocos2dx_extra_ios_iap_luabinding(L);
 #endif
 
-//    CCLOG("------------------------------------------------");
-//    CCLOG("LOAD LUA FILE: %s", path.c_str());
-//    CCLOG("------------------------------------------------");
+    // set lua path
+    FileUtils::getInstance()->addSearchPath("src");
+    const std::vector<std::string> vec = FileUtils::getInstance()->getSearchPaths();
+    for (int i = 0; i < vec.size(); i++)
+    {
+        pEngine->addSearchPath(vec.at(i).c_str());
+    }
+
     pEngine->executeScriptFile("src/main.lua");
 
 #endif
-//    m_mainWindow.setCocosAppDelegate(this);
+    m_mainWindow.prepareLua();
     m_mainWindow.show();
 
     return true;
+
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too

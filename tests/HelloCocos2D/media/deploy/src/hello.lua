@@ -172,6 +172,13 @@ local function main()
     sceneGame:addChild(createLayerFarm())
     sceneGame:addChild(createLayerMenu())
 
+    local label1 = cc.LabelTTF:create("Green", "fonts/arial.ttf", 40)
+    label1:setColor( cc.c3b(0, 255, 0 ))
+    sceneGame:addChild(label1)
+    label1:setPosition( cc.p(480, 640/5 * 1.5) )
+    label1:setAnchorPoint( cc.p(0.5, 0.5) )
+
+
     --ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("res/BillmanDemo/BillmanDemo.ExportJson")
     
     -- global_config = persistence.load("../Resources/src/config.lua")
