@@ -10,6 +10,8 @@ public:
     static int getIntValue(lua_State* L, const char* code);
     static bool getBoolValue(lua_State* L, const char *code);
     static const char* getStringValue(lua_State* L, const char *code);
+    static const char* getPointValue(lua_State* L, const char *code);
+
 };
 
 #endif // LUA2C_H

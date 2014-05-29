@@ -55,13 +55,18 @@ private:
     void setUnitData();
     void setMovementItem(const char* category, int aim);
     void setMovementList();
-    void setSkillData();
+    void setSkillData();    
 
     // other
     void setValidator();
 
-    void setComboText(QComboBox* comboBox,QString text);
+    void setComboText(QComboBox* comboBox,QString text);        
+
     lua_State *L;
 };
+
+double getPointX(QString str);
+double getPointY(QString str);
+void lua_pushPoint(lua_State*L, double x, double y);
 
 #endif // MAINWINDOW_H

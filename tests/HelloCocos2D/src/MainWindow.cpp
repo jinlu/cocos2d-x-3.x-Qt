@@ -10,6 +10,31 @@
 
 USING_NS_CC;
 
+double getPointX(QString str)
+{
+    double x = str.section(',', 0, 0).trimmed().toDouble();
+    return x;
+}
+
+double getPointY(QString str)
+{
+    double y = str.section(',', 1, 1).trimmed().toDouble();
+    return y;
+}
+
+void lua_pushPoint(lua_State*L, double x, double y)
+{
+    lua_newtable(L);
+
+    lua_pushstring(L,"x");
+    lua_pushnumber(L,x);
+    lua_settable(L,-3);
+
+    lua_pushstring(L,"y");
+    lua_pushnumber(L,y);
+    lua_settable(L,-3);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -67,10 +92,10 @@ void MainWindow::load()
       QLineEdit *edit5 = tab1_group->findChild<QLineEdit*>(tr("lineEdit_5"));
 
       edit1->setText(Lua2C::getStringValue(L,"global_config.unitData.speed"));
-      edit2->setText(Lua2C::getStringValue(L,"global_config.unitData.discoverRadii"));
-      edit3->setText(Lua2C::getStringValue(L,"global_config.unitData.discoverOffset"));
-      edit4->setText(Lua2C::getStringValue(L,"global_config.unitData.hurtBasePoint"));
-      edit5->setText(Lua2C::getStringValue(L,"global_config.unitData.hurtVar"));
+      edit2->setText(Lua2C::getPointValue(L,"global_config.unitData.discoverRadii"));
+      edit3->setText(Lua2C::getPointValue(L,"global_config.unitData.discoverOffset"));
+      edit4->setText(Lua2C::getPointValue(L,"global_config.unitData.hurtBasePoint"));
+      edit5->setText(Lua2C::getPointValue(L,"global_config.unitData.hurtVar"));
   }
 
   // load movementList
@@ -85,12 +110,12 @@ void MainWindow::load()
       QLineEdit *edit10 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_10"));
       QLineEdit *edit12 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_12"));
 
-      edit2->setText(Lua2C::getStringValue(L,"global_config.movementList.attack.aim"));
-      edit4->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_U.aim"));
-      edit6->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_I.aim"));
-      edit8->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_O.aim"));
-      edit10->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_L.aim"));
-      edit12->setText(Lua2C::getStringValue(L,"global_config.movementList.skill_H.aim"));
+      edit2->setText(Lua2C::getPointValue(L,"global_config.movementList.attack.aim"));
+      edit4->setText(Lua2C::getPointValue(L,"global_config.movementList.skill_U.aim"));
+      edit6->setText(Lua2C::getPointValue(L,"global_config.movementList.skill_I.aim"));
+      edit8->setText(Lua2C::getPointValue(L,"global_config.movementList.skill_O.aim"));
+      edit10->setText(Lua2C::getPointValue(L,"global_config.movementList.skill_L.aim"));
+      edit12->setText(Lua2C::getPointValue(L,"global_config.movementList.skill_H.aim"));
 
       QComboBox *combo1 = tab2_group->findChild<QComboBox*>(tr("comboBox_m1"));
       QComboBox *combo2 = tab2_group->findChild<QComboBox*>(tr("comboBox_m2"));
@@ -280,22 +305,20 @@ void MainWindow::setUnitData()
         lua_settable(L,-3);
 
         lua_pushstring(L,"discoverRadii");
-        lua_pushnumber(L,edit2->text().toInt());
+        lua_pushPoint(L,getPointX(edit2->text()),getPointY(edit2->text()));
         lua_settable(L,-3);
 
         lua_pushstring(L,"discoverOffset");
-        lua_pushnumber(L,edit3->text().toInt());
+        lua_pushPoint(L,getPointX(edit3->text()),getPointY(edit3->text()));
         lua_settable(L,-3);
 
         lua_pushstring(L,"hurtBasePoint");
-        lua_pushnumber(L,edit4->text().toInt());
+        lua_pushPoint(L,getPointX(edit4->text()),getPointY(edit4->text()));
         lua_settable(L,-3);
 
         lua_pushstring(L,"hurtVar");
-        lua_pushnumber(L,edit5->text().toInt());
+        lua_pushPoint(L,getPointX(edit5->text()),getPointY(edit5->text()));
         lua_settable(L,-3);
-
-//        qDebug() << "5 : " << edit5->text();
 
 //        lua_setglobal(L,"unitData");
 //        luaL_dostring(L, "print(-->unitData)");
@@ -476,7 +499,6 @@ void MainWindow::setSkillData()
                         lua_pushstring(L, lineEdit1->text().toStdString().c_str());
                         lua_settable(L,-3);
                     }
-
                 }
              }
 
@@ -520,10 +542,10 @@ void MainWindow::setValidator()
         QLineEdit *edit5 = tab1_group->findChild<QLineEdit*>(tr("lineEdit_5"));
 
         edit1->setValidator(validator);
-        edit2->setValidator(validator);
-        edit3->setValidator(validator);
-        edit4->setValidator(validator);
-        edit5->setValidator(validator);
+//        edit2->setValidator(validator);
+//        edit3->setValidator(validator);
+//        edit4->setValidator(validator);
+//        edit5->setValidator(validator);
     }
 
     // load movementList
@@ -538,12 +560,12 @@ void MainWindow::setValidator()
         QLineEdit *edit10 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_10"));
         QLineEdit *edit12 = tab2_group->findChild<QLineEdit*>(tr("lineEdit2_12"));
 
-        edit2->setValidator(validator);
-        edit4->setValidator(validator);
-        edit6->setValidator(validator);
-        edit8->setValidator(validator);
-        edit10->setValidator(validator);
-        edit12->setValidator(validator);
+//        edit2->setValidator(validator);
+//        edit4->setValidator(validator);
+//        edit6->setValidator(validator);
+//        edit8->setValidator(validator);
+//        edit10->setValidator(validator);
+//        edit12->setValidator(validator);
     }
 
     // skill
