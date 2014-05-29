@@ -3,12 +3,7 @@
 
 #include "CCLuaEngine.h"
 #include "qcombobox.h"
-
-//#if QT_VERSION >= 0x050000
-//#include <QtWidgets/QMainWindow>
-//#else
 #include <QMainWindow>
-//#endif
 
 class UIManager;
 

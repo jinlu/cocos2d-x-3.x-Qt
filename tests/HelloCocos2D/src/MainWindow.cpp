@@ -73,7 +73,6 @@ void MainWindow::changeEvent(QEvent *e)
 void MainWindow::prepareLua()
 {
     luaL_dostring(L, "GLoader = require 'persistence'");
-//    luaL_dostring(L, "if (GLoader == nil) then print 'GLoader is nil' else print 'GLoader is good !' end");
 }
 
 void MainWindow::load()
@@ -699,8 +698,6 @@ void MainWindow::setComboText(QComboBox*comboBox,QString text)
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-//    qDebug() << "Combo Index : " << index;
-
     QStackedWidget *stackedWidget = this->findChild<QStackedWidget *>(tr("stackedWidget"));
     if (index >= 0 && index < stackedWidget->count())
     {
@@ -717,13 +714,10 @@ void MainWindow::on_actionOpen_triggered()
         // set path
         QString path = QString("GPath = \"%1\"").arg(fileName);
         luaL_dostring(L,path.toStdString().c_str());
-//        qDebug() << "path:"<<path;
-//        luaL_dostring(L,"print (GPath)");
 
         // load config
         QString code = QString("global_config = GLoader.load(\"%1\")").arg(fileName);
         luaL_dostring(L,code.toStdString().c_str());
-//        luaL_dostring(L,"print (global_config.unitData.speed)");
         load();
     }
 }

@@ -735,7 +735,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>12</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QGroupBox" name="group1">
