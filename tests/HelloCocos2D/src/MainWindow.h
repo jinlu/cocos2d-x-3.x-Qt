@@ -73,7 +73,7 @@ private:
 
     // save data
     void setUnitData();
-    void setMovementItem(const char* category, int aim);
+    void setMovementItem(const char* category, const char* aim);
     void setMovementList();
     void setSkillData();    
 

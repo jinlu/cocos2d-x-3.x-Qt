@@ -336,7 +336,7 @@ void MainWindow::setUnitData()
 category = "attack",
 aim = 3
  */
-void MainWindow::setMovementItem(const char* category, int aim)
+void MainWindow::setMovementItem(const char* category, const char* aim)
 {
     lua_newtable(L);
 
@@ -345,8 +345,8 @@ void MainWindow::setMovementItem(const char* category, int aim)
     lua_settable(L,-3);
 
     lua_pushstring(L,"aim");
-    lua_pushnumber(L,aim);
-    lua_settable(L,-3);    
+    lua_pushstring(L, aim);
+    lua_settable(L,-3);
 }
 
 void MainWindow::setMovementList()
@@ -380,27 +380,27 @@ void MainWindow::setMovementList()
            },
          */
         lua_pushstring(L,"attack");
-        setMovementItem(combo1->currentText().toStdString().c_str(),edit2->text().toInt());
+        setMovementItem(combo1->currentText().toStdString().c_str(),edit2->text().toStdString().c_str());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_U");
-        setMovementItem(combo2->currentText().toStdString().c_str(),edit4->text().toInt());
+        setMovementItem(combo2->currentText().toStdString().c_str(),edit4->text().toStdString().c_str());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_I");
-        setMovementItem(combo3->currentText().toStdString().c_str(),edit6->text().toInt());
+        setMovementItem(combo3->currentText().toStdString().c_str(),edit6->text().toStdString().c_str());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_O");
-        setMovementItem(combo4->currentText().toStdString().c_str(),edit8->text().toInt());
+        setMovementItem(combo4->currentText().toStdString().c_str(),edit8->text().toStdString().c_str());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_L");
-        setMovementItem(combo5->currentText().toStdString().c_str(),edit10->text().toInt());
+        setMovementItem(combo5->currentText().toStdString().c_str(),edit10->text().toStdString().c_str());
         lua_settable(L,-3);
 
         lua_pushstring(L,"skill_H");
-        setMovementItem(combo6->currentText().toStdString().c_str(),edit12->text().toInt());
+        setMovementItem(combo6->currentText().toStdString().c_str(),edit12->text().toStdString().c_str());
         lua_settable(L,-3);
 
 //        lua_setglobal(L,"movementList");
