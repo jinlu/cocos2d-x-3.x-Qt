@@ -177,8 +177,8 @@ void MainWindow::save(const char* path)
     lua_setglobal(L,"tmpMovementList");
     luaL_dostring(L,"global_config.movementList = tmpMovementList");
 
-    luaL_dostring(L, "print(\"global_config.skillData.iceAge.skillname\")");
-    luaL_dostring(L, "print(global_config.skillData.iceAge.skillname)");
+//    luaL_dostring(L, "print(\"global_config.skillData.iceAge.skillname\")");
+//    luaL_dostring(L, "print(global_config.skillData.iceAge.skillname)");
 
     if (path && strlen(path) > 0)
     {
@@ -226,8 +226,8 @@ void MainWindow::loadSkillData()
 
     if (root)
     {
-        QComboBox *itemCombo = root->findChild<QComboBox*>("comboBox");
-        if (itemCombo == NULL)
+        QComboBox *itemCombo = root->findChild<QComboBox*>("comboBox");        
+        if (itemCombo == NULL || itemCombo->currentText().length() == 0)
         {
             return;
         }
@@ -357,7 +357,15 @@ void MainWindow::setMovementItem(const char* category, const char* aim)
     lua_settable(L,-3);
 
     lua_pushstring(L,"aim");
-    lua_pushstring(L, aim);
+
+    lua_newtable(L);
+    lua_pushstring(L,"x");
+    lua_pushnumber(L,getPointX(aim));
+    lua_settable(L,-3);
+    lua_pushstring(L,"y");
+    lua_pushnumber(L,getPointY(aim));
+    lua_settable(L,-3);
+
     lua_settable(L,-3);
 }
 
@@ -709,18 +717,13 @@ void MainWindow::setComboText(QComboBox*comboBox,QString text)
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-//    QStackedWidget *stackedWidget = this->findChild<QStackedWidget *>(tr("stackedWidget"));
-//    if (index >= 0 && index < stackedWidget->count())
-//    {
-//        stackedWidget->setCurrentIndex(index);
-//    }
     loadSkillData();
 }
 
 void MainWindow::on_actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Config"), "../Resources", tr("Lua Files (*.lua)"));
+        tr("Open Config"), "../Resources/src/scripts/Data/SkillConfig", tr("Lua Files (*.lua)"));
     if (fileName.length() > 0)
     {
         // set path
@@ -820,10 +823,6 @@ void MainWindow::on_actionReload_triggered()
 
     const char *path = Lua2C::getStringValue(L,"GPath");
     QString filename = getFileName(path);
-//    qDebug() << "filename:" << filename;
-
     QString code = QString("require \"Scene.BattleSceneExtend\" debugSkillUpdate(\"%1\")").arg(filename);
-//    luaL_dostring(L,"require \"Scene.BattleSceneExtend\" debugSkillUpdate(\"PlayerSwordman\")");
     luaL_dostring(L,code.toStdString().c_str());
-
 }
