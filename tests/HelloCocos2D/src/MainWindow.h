@@ -34,19 +34,44 @@ private Q_SLOTS:
     void on_actionOpen_triggered();
     void on_comboBox_currentIndexChanged(int index);
     void on_actionSave_triggered();
-
     void on_actionSave_AS_triggered();
+
+    void on_lineEdit_1_0_textEdited(const QString &arg1);
+
+    void on_comboBox_1_1_currentTextChanged(const QString &arg1);
+
+    void on_lineEdit_1_2_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_3_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_4_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_5_textEdited(const QString &arg1);
+
+    void on_comboBox_1_2_currentTextChanged(const QString &arg1);
+
+    void on_lineEdit_1_7_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_8_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_9_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_10_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_11_textEdited(const QString &arg1);
+
+    void on_lineEdit_1_12_textEdited(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;
 
-    // index 0-13
-    QString getSkillActionName(int index);
-
     // index 0-11
     QString getSkillKeyName(int index);
 
-    // data
+    // load data
+    void loadSkillData();
+
+    // save data
     void setUnitData();
     void setMovementItem(const char* category, int aim);
     void setMovementList();
@@ -58,6 +83,7 @@ private:
     void setComboText(QComboBox* comboBox,QString text);        
 
     lua_State *L;
+    QTabWidget* tabWidget;
 };
 
 double getPointX(QString str);

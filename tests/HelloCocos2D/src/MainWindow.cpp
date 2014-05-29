@@ -50,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent) :
     LuaEngine *pEngine = LuaEngine::getInstance();
     L = pEngine->getLuaStack()->getLuaState();
 
+    tabWidget = this->findChild<QTabWidget *>(tr("tabWidget"));
+
     setValidator();
 }
 
@@ -77,8 +79,6 @@ void MainWindow::prepareLua()
 
 void MainWindow::load()
 {
-  QTabWidget *tabWidget = this->findChild<QTabWidget *>(tr("tabWidget"));
-
   // load unitdata
   QWidget *tab1 = tabWidget->findChild<QWidget*>(tr("tab_1"));
   QWidget *tab1_group = tab1->findChild<QWidget*>(tr("groupBox"));
@@ -129,104 +129,45 @@ void MainWindow::load()
       setComboText(combo4,Lua2C::getStringValue(L,"global_config.movementList.skill_O.category"));
       setComboText(combo5,Lua2C::getStringValue(L,"global_config.movementList.skill_L.category"));
       setComboText(combo6,Lua2C::getStringValue(L,"global_config.movementList.skill_H.category"));
-
   }
 
-  // load skillData
+  luaL_dostring(L," local a = function() local retValue = {} for k, _ in pairs(global_config.skillData) do table.insert(retValue,k) end return retValue end  GKeys = a()");
+  luaL_dostring(L," if (GKeys) then print ('ooo') else print('xxx') end");
+
   QWidget *tab3 = tabWidget->findChild<QWidget*>(tr("tab_3"));
   QWidget *root = tab3->findChild<QWidget*>(tr("root"));
 
-  if (root)
+  if (root == NULL)
+      return;
+  QComboBox *itemCombo = root->findChild<QComboBox*>("comboBox");
+
+  if (itemCombo == NULL)
+      return;
+
+  int kLength = Lua2C::getIntValue(L,"#GKeys");
+  for (int i = 1; i <= kLength; i++)
   {
-      for (int i = 0; i < 13; i++)
-      {
-          QString groupName = QString("group%1")
-                                      .arg(i + 1);
-          QList<QGroupBox*> list = root->findChildren<QGroupBox*>(groupName);
-
-          if (list.count() <= 0)
-          {
-              break;
-          }
-
-          QGroupBox *group = list.at(0);
-          if (group == NULL)
-          {
-              break;
-          }
-
-          for (int j = 0; j < 2; j++)
-          {
-              // combo 1
-              QString string = QString("comboBox_%1_%2")
-                          .arg(i + 1)
-                          .arg(j + 1);
-              QComboBox *comboBox = group->findChild<QComboBox*>(string);
-              if (comboBox)
-              {
-                  if (j == 0)
-                  {
-                      QString code = QString("global_config.skillData.%1.category")
-                              .arg(getSkillActionName(i));
-                      const char* str = Lua2C::getStringValue(L,code.toStdString().c_str());
-                      setComboText(comboBox,QString(str));
-                  }
-                  else if(j == 1)
-                  {
-                      QString code = QString("global_config.skillData.%1.beatFlip")
-                              .arg(getSkillActionName(i));
-                      bool value = Lua2C::getBoolValue(L,code.toStdString().c_str());
-
-                      if (value)
-                      {
-                          comboBox->setCurrentIndex(1);
-                      }
-                      else
-                      {
-                          comboBox->setCurrentIndex(0);
-                      }
-                  }
-              }
-          }
-
-          for (int j = 0; j < 13; j++)
-          {
-              QString string = QString("lineEdit_%1_%2")
-                          .arg(i + 1)
-                          .arg(j);
-              QLineEdit *lineEdit1 = group->findChild<QLineEdit*>(string);
-              if (lineEdit1)
-              {
-                  QString code = QString("global_config.skillData.%1.%2")
-                          .arg(getSkillActionName(i))
-                          .arg(getSkillKeyName(j));
-                  lineEdit1->setText(Lua2C::getStringValue(L,code.toStdString().c_str()));
-              }
-          }
-      }
+    QString code = QString("GKeys[%1]").arg(i);
+    const char *string = Lua2C::getStringValue(L, code.toStdString().c_str());
+    itemCombo->addItem(string);
   }
+
+  loadSkillData();
+
 }
 
 void MainWindow::save(const char* path)
 {
-    lua_newtable(L);
-
-    lua_pushstring(L, "unitData");
     setUnitData();
-    lua_settable(L,-3);
+    lua_setglobal(L,"tmpUnitData");
+    luaL_dostring(L,"global_config.unitData = tmpUnitData");
 
-    lua_pushstring(L, "movementList");
     setMovementList();
-    lua_settable(L,-3);
+    lua_setglobal(L,"tmpMovementList");
+    luaL_dostring(L,"global_config.movementList = tmpMovementList");
 
-    lua_pushstring(L, "skillData");
-    setSkillData();
-    lua_settable(L,-3);
-
-    lua_setglobal(L,"tmpConfig");
-
-//    luaL_dostring(L, "print(\"tmpConfig.skillData.flamingChariot.skillname\")");
-//    luaL_dostring(L, "print(tmpConfig.skillData.flamingChariot.skillname)");
+    luaL_dostring(L, "print(\"global_config.skillData.iceAge.skillname\")");
+    luaL_dostring(L, "print(global_config.skillData.iceAge.skillname)");
 
     if (path && strlen(path) > 0)
     {
@@ -238,30 +179,13 @@ void MainWindow::save(const char* path)
         luaL_dostring(L, "file = io.open(GPath,'w')");
     }
     luaL_dostring(L, "if (file == nil) then print(\"ERROR:file open error! file path :\",GPath) end");
-    luaL_dostring(L, "persistence.store(file,tmpConfig)");
+    luaL_dostring(L, "persistence.store(file,global_config)");
     luaL_dostring(L, "print(\" save succeed! \")");
 }
 
 QWidget* MainWindow::getGLViewSuperWidget()
 {
     return ui->widget;
-}
-
-// index 0-13
-QString MainWindow::getSkillActionName(int index)
-{
-    if (index < 0 || index > 13)
-    {
-        return QString("");
-    }
-
-    QComboBox *combox = this->findChildren<QComboBox*>("comboBox")[0];
-    if (combox == NULL)
-    {
-        return QString("");
-    }
-
-    return combox->itemText(index);
 }
 
 // index 0-11
@@ -280,6 +204,85 @@ QString MainWindow::getSkillKeyName(int index)
 
     QLabel *label = list.at(0);
     return label->text();
+}
+
+void MainWindow::loadSkillData()
+{
+    // load skillData
+    QWidget *tab3 = tabWidget->findChild<QWidget*>(tr("tab_3"));
+    QWidget *root = tab3->findChild<QWidget*>(tr("root"));
+
+    if (root)
+    {
+        QComboBox *itemCombo = root->findChild<QComboBox*>("comboBox");
+        if (itemCombo == NULL)
+        {
+            return;
+        }
+
+        QList<QGroupBox*> list = root->findChildren<QGroupBox*>("group1");
+
+        if (list.count() <= 0)
+        {
+            return;
+        }
+
+        QGroupBox *group = list.at(0);
+        if (group == NULL)
+        {
+            return;
+        }
+
+        for (int j = 0; j < 2; j++)
+        {
+            // combo 1
+            QString string = QString("comboBox_%1_%2")
+                        .arg(0 + 1)
+                        .arg(j + 1);
+            QComboBox *comboBox = group->findChild<QComboBox*>(string);
+            if (comboBox)
+            {
+                if (j == 0)
+                {
+                    QString code = QString("global_config.skillData.%1.category")
+                            .arg(itemCombo->currentText());
+                    const char* str = Lua2C::getStringValue(L,code.toStdString().c_str());
+                    setComboText(comboBox,QString(str));
+                }
+                else if(j == 1)
+                {
+                    QString code = QString("global_config.skillData.%1.beatFlip")
+                            .arg(itemCombo->currentText());
+                    bool value = Lua2C::getBoolValue(L,code.toStdString().c_str());
+
+                    if (value)
+                    {
+                        comboBox->setCurrentIndex(1);
+                    }
+                    else
+                    {
+                        comboBox->setCurrentIndex(0);
+                    }
+                }
+            }
+        }
+
+        for (int j = 0; j < 13; j++)
+        {
+            QString string = QString("lineEdit_%1_%2")
+                        .arg(0 + 1)
+                        .arg(j);
+            QLineEdit *lineEdit1 = group->findChild<QLineEdit*>(string);
+            if (lineEdit1)
+            {
+                QString code = QString("global_config.skillData.%1.%2")
+                        .arg(itemCombo->currentText())
+                        .arg(getSkillKeyName(j));
+                lineEdit1->setText(Lua2C::getStringValue(L,code.toStdString().c_str()));
+            }
+        }
+    }
+
 }
 
 void MainWindow::setUnitData()
@@ -322,10 +325,10 @@ void MainWindow::setUnitData()
 //        lua_setglobal(L,"unitData");
 //        luaL_dostring(L, "print(-->unitData)");
 //        luaL_dostring(L, "print(unitData.speed)");
-//        luaL_dostring(L, "print(unitData.discoverRadii)");
-//        luaL_dostring(L, "print(unitData.discoverOffset)");
-//        luaL_dostring(L, "print(unitData.hurtBasePoint)");
-//        luaL_dostring(L, "print(unitData.hurtVar)");
+//        luaL_dostring(L, "print(unitData.discoverRadii.x)");
+//        luaL_dostring(L, "print(unitData.discoverOffset.x)");
+//        luaL_dostring(L, "print(unitData.hurtBasePoint.x)");
+//        luaL_dostring(L, "print(unitData.hurtVar.x)");
     }
 }
 
@@ -420,107 +423,103 @@ void MainWindow::setMovementList()
 
 void MainWindow::setSkillData()
 {
-    QTabWidget *tabWidget = this->findChild<QTabWidget *>(tr("tabWidget"));
+//    luaL_dostring(L,"tmpSkillData. = nil");
+
     QWidget *tab3 = tabWidget->findChild<QWidget*>(tr("tab_3"));
     QWidget *root = tab3->findChild<QWidget*>(tr("root"));
 
-    if (root)
+    if (root == NULL)
+        return;
+
+    QComboBox *itemCombo = root->findChild<QComboBox*>("comboBox");
+    if (itemCombo == NULL)
     {
-        lua_newtable(L);
+        return;
+    }
 
-        for (int i = 0; i < 13; i++)
+    QList<QGroupBox*> list = root->findChildren<QGroupBox*>("group1");
+
+    if (list.count() <= 0)
+    {
+        return;
+    }
+
+    QGroupBox *group = list.at(0);
+    if (group == NULL)
+    {
+        return;
+    }
+
+    lua_newtable(L);
+
+    for (int j = 0; j < 2; j++)
+    {
+        // combo 1
+        QString string = QString("comboBox_%1_%2")
+                    .arg(0 + 1)
+                    .arg(j + 1);
+        QComboBox *comboBox = group->findChild<QComboBox*>(string);
+        if (comboBox)
         {
-            QString groupName = QString("group%1")
-                                        .arg(i + 1);
-            QList<QGroupBox*> list = root->findChildren<QGroupBox*>(groupName);
-
-            if (list.count() <= 0)
+            if (j == 0)
             {
-                break;
+                lua_pushstring(L, "category");
+                lua_pushstring(L, comboBox->currentText().toStdString().c_str());
+                lua_settable(L,-3);
             }
-
-            QGroupBox *group = list.at(0);
-            if (group == NULL)
+            else if(j == 1)
             {
-                break;
+                bool value = (QString::compare(comboBox->currentText(),"true",Qt::CaseSensitive) == 0);
+                lua_pushstring(L, "beatFlip");
+                lua_pushboolean(L, value);
+                lua_settable(L,-3);
             }
-
-            lua_pushstring(L, getSkillActionName(i).toStdString().c_str());
-            lua_newtable(L);
-
-
-            for (int j = 0; j < 2; j++)
-            {
-                // combo 1
-                QString string = QString("comboBox_%1_%2")
-                            .arg(i + 1)
-                            .arg(j + 1);
-                QComboBox *comboBox = group->findChild<QComboBox*>(string);
-                if (comboBox)
-                {
-                    if (j == 0)
-                    {
-                        lua_pushstring(L, "category");
-                        lua_pushstring(L, comboBox->currentText().toStdString().c_str());
-                        lua_settable(L,-3);
-                    }
-                    else if(j == 1)
-                    {
-                        bool value = (QString::compare(comboBox->currentText(),"true",Qt::CaseSensitive) == 0);
-                        lua_pushstring(L, "beatFlip");
-                        lua_pushboolean(L, value);
-                        lua_settable(L,-3);
-                    }
-                }
-            }
-
-            // line Edit
-            for (int j = 0; j < 13; j++)
-            {
-                QString string = QString("lineEdit_%1_%2")
-                            .arg(i + 1)
-                            .arg(j);
-                QLineEdit *lineEdit1 = group->findChild<QLineEdit*>(string);
-                if (lineEdit1)
-                {
-                    const QIntValidator* validator = dynamic_cast<const QIntValidator*>(lineEdit1->validator());
-                    if (validator)
-                    {
-//                        qDebug() << "number : " << lineEdit1->text().toFloat();
-                        lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
-                        lua_pushnumber(L, lineEdit1->text().toDouble());
-                        lua_settable(L,-3);
-                    }
-                    else
-                    {
-//                        qDebug() << "text : " << lineEdit1->text();
-                        lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
-                        lua_pushstring(L, lineEdit1->text().toStdString().c_str());
-                        lua_settable(L,-3);
-                    }
-                }
-             }
-
-            lua_settable(L,-3);
         }
     }
 
-//    lua_setglobal(L,"skillData");
+    // line Edit
+    for (int j = 0; j < 13; j++)
+    {
+        QString string = QString("lineEdit_%1_%2")
+                    .arg(0 + 1)
+                    .arg(j);
+        QLineEdit *lineEdit1 = group->findChild<QLineEdit*>(string);
+        if (lineEdit1)
+        {
+            const QIntValidator* validator = dynamic_cast<const QIntValidator*>(lineEdit1->validator());
+            if (validator)
+            {
+                lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
+                lua_pushnumber(L, lineEdit1->text().toDouble());
+                lua_settable(L,-3);
+            }
+            else
+            {
+                lua_pushstring(L, getSkillKeyName(j).toStdString().c_str());
+                lua_pushstring(L, lineEdit1->text().toStdString().c_str());
+                lua_settable(L,-3);
+            }
+        }
+     }
 
-//    luaL_dostring(L, "print(\"-->skillData\")");
-//    luaL_dostring(L, "print(skillData.attack_1.skillname)");
-//    luaL_dostring(L, "print(skillData.attack_1.category)");
-//    luaL_dostring(L, "print(skillData.attack_1.hurtMotion)");
-//    luaL_dostring(L, "print(skillData.attack_1.hurtStiffTime)");
-//    luaL_dostring(L, "print(skillData.attack_1.hurtMovingTime)");
-//    luaL_dostring(L, "print(skillData.attack_1.bSpeedValue)");
-//    luaL_dostring(L, "print(skillData.attack_1.beatFlip)");
-//    luaL_dostring(L, "print(skillData.attack_1.float)");
-//    luaL_dostring(L, "print(skillData.attack_1.height)");
-//    luaL_dostring(L, "print(skillData.attack_1.beatFloat)");
-//    luaL_dostring(L, "print(skillData.attack_1.beatFloatDuration)");
-//    luaL_dostring(L, "print(skillData.attack_1.hurtEffect)");
-//    luaL_dostring(L, "print(skillData.attack_1.loops)");
+    lua_setglobal(L,"tmpTable");
+    QString code = QString("global_config.skillData.%1=tmpTable").arg(itemCombo->currentText());
+    luaL_dostring(L,code.toStdString().c_str());
+
+//    luaL_dostring(L, "print(\"-->tmpSkillData\")");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.skillname)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.category)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.hurtMotion)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.hurtStiffTime)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.hurtMovingTime)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.bSpeedValue)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.beatFlip)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.float)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.height)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.beatFloat)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.beatFloatDuration)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.hurtEffect)");
+//    luaL_dostring(L, "print(tmpSkillData.iceAge.loops)");
 }
 
 void MainWindow::setValidator()
@@ -698,11 +697,12 @@ void MainWindow::setComboText(QComboBox*comboBox,QString text)
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-    QStackedWidget *stackedWidget = this->findChild<QStackedWidget *>(tr("stackedWidget"));
-    if (index >= 0 && index < stackedWidget->count())
-    {
-        stackedWidget->setCurrentIndex(index);
-    }
+//    QStackedWidget *stackedWidget = this->findChild<QStackedWidget *>(tr("stackedWidget"));
+//    if (index >= 0 && index < stackedWidget->count())
+//    {
+//        stackedWidget->setCurrentIndex(index);
+//    }
+    loadSkillData();
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -735,4 +735,69 @@ void MainWindow::on_actionSave_AS_triggered()
     {
         save(fileName.toStdString().c_str());
     }
+}
+
+void MainWindow::on_lineEdit_1_0_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_comboBox_1_1_currentTextChanged(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_2_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_3_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_4_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_5_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_comboBox_1_2_currentTextChanged(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_7_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_8_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_9_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_10_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_11_textEdited(const QString &arg1)
+{
+    setSkillData();
+}
+
+void MainWindow::on_lineEdit_1_12_textEdited(const QString &arg1)
+{
+    setSkillData();
 }
