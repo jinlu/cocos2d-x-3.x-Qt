@@ -333,8 +333,8 @@ void MainWindow::setUnitData()
 }
 
 /*
-category = "attack",
-aim = 3
+    category = "attack",
+    aim = 3
  */
 void MainWindow::setMovementItem(const char* category, const char* aim)
 {

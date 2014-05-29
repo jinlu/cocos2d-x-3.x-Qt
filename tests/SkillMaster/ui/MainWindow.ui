@@ -67,7 +67,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -659,71 +659,6 @@
          <height>26</height>
         </rect>
        </property>
-       <item>
-        <property name="text">
-         <string>attack_1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>attack_2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>attack_3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>attack_4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingChariot</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingTower</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingHanged</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingHangedFinal</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingPower</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingPower2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingPowerFinal</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingJudgement</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>flamingJudgementFinal</string>
-        </property>
-       </item>
       </widget>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="geometry">
@@ -735,7 +670,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>12</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QGroupBox" name="group1">
@@ -5114,7 +5049,14 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_AS"/>
    </widget>
+   <widget class="QMenu" name="menuProject">
+    <property name="title">
+     <string>Project</string>
+    </property>
+    <addaction name="actionReload"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuProject"/>
   </widget>
   <action name="actionOpen">
    <property name="text">
@@ -5129,6 +5071,11 @@
   <action name="actionSave_AS">
    <property name="text">
     <string>Save As</string>
+   </property>
+  </action>
+  <action name="actionReload">
+   <property name="text">
+    <string>Reload</string>
    </property>
   </action>
  </widget>
